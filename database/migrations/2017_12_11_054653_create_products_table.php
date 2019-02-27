@@ -13,7 +13,8 @@ class CreateProductsTable extends Migration
      */
     public function up()
     {
-        Schema::create('products', function (Blueprint $table) {
+        if (!Schema::hasTable('products')) {
+            Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->unique();
             $table->string('slug')->unique();
@@ -22,7 +23,9 @@ class CreateProductsTable extends Migration
             $table->text('description');
             $table->boolean('featured')->default(false);
             $table->timestamps();
-        });
+            });
+        }
+        
     }
 
     /**
